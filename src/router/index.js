@@ -1,11 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import IndexPage from '../views/IndexPage.vue'
-import Products from '../components/Products.vue'
-import ShowProduct from '../components/ShowProduct.vue'
-import CartProduct from '../components/CartProduct.vue'
 import AdminBackend from '../views/AdminBackend.vue'
-
-
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
@@ -16,16 +11,21 @@ const router = createRouter({
       children: [
         {
           path: 'products',
-          component: Products,
+          component: () => import('../components/Products.vue')
         },
         {
           path: 'cart',
-          component: CartProduct,
+          component: () => import('../components/CartProduct.vue')
         },
         {
           path: 'products/:id',
-          component: ShowProduct,
-        }]
+          component: () => import('../components/ShowProduct.vue')
+        },
+        {
+          path: '/article',
+          component: () => import('../components/ArticleList.vue')
+        }
+      ]
     },
     {
       path: '/login',

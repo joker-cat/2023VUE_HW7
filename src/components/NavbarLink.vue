@@ -32,7 +32,12 @@ export default {
       return docCookies.hasItem('token')
     },
     titleName() {
-      return { '/': '首頁', '/products': '商品頁', '/cart': '購物車' }[this.$route.path]
+      return {
+        '/': '首頁',
+        '/products': '商品頁',
+        '/cart': '購物車',
+        '/article': '文章列表'
+      }[this.$route.path]
     }
   },
   methods: {

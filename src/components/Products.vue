@@ -108,7 +108,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 @import 'vue-loading-overlay/dist/css/index.css';
 
 </style>
