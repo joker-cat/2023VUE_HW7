@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import 'bootstrap/dist/js/bootstrap.esm.min.js';
 import { mapState } from 'pinia'
 import cart from '../stores/cart.js'
 export default {
@@ -65,5 +65,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "bootstrap/scss/bootstrap";
+@import "bootstrap/scss/bootstrap.scss";
 </style>

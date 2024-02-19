@@ -1,5 +1,6 @@
 <template>
   <div class="text-center">
+    <loading v-model:active="isLoading" :can-cancel="true" :is-full-page="fullPage" />
     <table class="table align-middle py-4">
       <thead>
         <tr>
@@ -24,14 +25,8 @@
           <td>{{ iproduct.price }}</td>
           <td class="text-end p-0">
             <div>
-              <RouterLink class="btn btn-success me-2" :to="`/products/${iproduct.id}`"
-                >查看</RouterLink
-              >
-              <button
-                class="btn btn-primary"
-                :class="getButtonClass(iproduct)"
-                @click="clickaddToCart(iproduct)"
-              >
+              <RouterLink class="btn btn-success me-2" :to="`/products/${iproduct.id}`">查看</RouterLink>
+              <button class="btn btn-primary" :class="getButtonClass(iproduct)" @click="clickaddToCart(iproduct)">
                 {{ iproduct.ispressed ? '已加入購物車' : '加入購物車' }}
               </button>
             </div>
@@ -42,30 +37,18 @@
     <div aria-label="Page navigation example" class="d-flex justify-content-center">
       <ul class="pagination p-0">
         <li class="page-item" :class="{ disabled: !getPagination.has_pre }">
-          <a
-            class="page-link"
-            aria-label="Previous"
-            style="cursor: pointer"
-            @click="getPageProduct(getPagination.current_page - 1)"
-          >
+          <a class="page-link" aria-label="Previous" style="cursor: pointer"
+            @click="getPageProduct(getPagination.current_page - 1)">
             <span aria-hidden="true">&laquo;</span>
           </a>
         </li>
-        <li
-          class="page-item"
-          :class="{ active: page === getPagination.current_page }"
-          v-for="page in getPagination.total_pages"
-          :key="'mypage' + page"
-        >
+        <li class="page-item" :class="{ active: page === getPagination.current_page }"
+          v-for="page in getPagination.total_pages" :key="'mypage' + page">
           <a class="page-link" style="cursor: pointer" @click="getPageProduct(page)">{{ page }}</a>
         </li>
         <li class="page-item" :class="{ disabled: !getPagination.has_next }">
-          <a
-            class="page-link"
-            aria-label="Next"
-            style="cursor: pointer"
-            @click="getPageProduct(getPagination.current_page + 1)"
-          >
+          <a class="page-link" aria-label="Next" style="cursor: pointer"
+            @click="getPageProduct(getPagination.current_page + 1)">
             <span aria-hidden="true">&raquo;</span>
           </a>
         </li>
@@ -78,14 +61,19 @@
 <script>
 import cart from '../stores/cart.js'
 import { mapState, mapActions } from 'pinia'
+import Loading from 'vue-loading-overlay';
+
 export default {
   data() {
     return {
       page: 1,
-      load: null
+      isLoading: false,
+      fullPage: !false
     }
   },
-  created() {},
+  components: {
+    Loading
+  },
   methods: {
     ...mapActions(cart, ['addToCart', 'axiosGetProducts']),
     clickaddToCart(product) {
@@ -94,7 +82,7 @@ export default {
       product.ispressed = true
     },
     getPageProduct(page) {
-      this.null = this.$loading.show()
+      this.isLoading = true;
       this.page = page
       this.axiosGetProducts(page)
     },
@@ -114,10 +102,13 @@ export default {
   },
   watch: {
     getProducts() {
-      this.null.hide()
+      this.isLoading = false
     }
   }
 }
 </script>
 
-<style></style>
+<style>
+@import 'vue-loading-overlay/dist/css/index.css';
+
+</style>
