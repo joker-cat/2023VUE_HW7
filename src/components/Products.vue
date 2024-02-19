@@ -1,7 +1,7 @@
 <template>
-  <div class="text-center">
-    <loading v-model:active="isLoading" :can-cancel="true" :is-full-page="fullPage" />
-    <table class="table align-middle py-4">
+  <div class="text-center position-relative">
+    <loading class="w-100" v-model:active="isLoading" :is-full-page="fullPage" />
+    <table class="table align-middle py-4" style="min-height: 500px;">
       <thead>
         <tr>
           <th style="width: 5%">#</th>
@@ -68,7 +68,7 @@ export default {
     return {
       page: 1,
       isLoading: false,
-      fullPage: !false
+      fullPage: false
     }
   },
   components: {
