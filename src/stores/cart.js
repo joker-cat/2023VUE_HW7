@@ -8,7 +8,8 @@ import axios from 'axios'
 
 export default defineStore('cart', {
   state: () => ({
-    baseUrl: import.meta.env.VITE_PATH,
+    // baseUrl: import.meta.env.VITE_PATH,
+    baseUrl: 'https://ec-course-api.hexschool.io/v2/api/joooker',
     products: [],
     pagination: [],
     myCart: [],
