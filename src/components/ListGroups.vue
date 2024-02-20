@@ -65,7 +65,6 @@ export default {
   },
   watch: {
     category(newValue) {
-      this.changeLoadingStatus()
       this.axiosGetProducts(1, newValue);
     }
   }

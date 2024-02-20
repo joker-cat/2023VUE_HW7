@@ -2,7 +2,7 @@
 	<div class="card mb-3">
 		<div class="row g-0">
 			<div class="col-md-3">
-				<img class="w-100" src="https://drive.google.com/thumbnail?id=1opbztcfBmMVBQd6sWMg1DRifiOXQnMbO" alt="img error">
+				<img class="w-100" src="https://drive.google.com/thumbnail?id=1nTzt8C1mlGol1IOb-ukfj2RzeWIN-YQb" alt="img error">
 			</div>
 			<div class="col-md-9">
 				<div class="card-body">

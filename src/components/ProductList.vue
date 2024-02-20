@@ -40,22 +40,23 @@
       <ul class="pagination p-0">
         <li class="page-item" :class="{ disabled: !getPagination.has_pre }">
           <a class="page-link" aria-label="Previous" style="cursor: pointer"
-            @click="getPageProduct(getPagination.current_page - 1)">
+            @click="axiosGetProducts(getPagination.current_page - 1, getCategory)">
             <span aria-hidden="true">&laquo;</span>
           </a>
         </li>
         <li class="page-item" :class="{ active: page === getPagination.current_page }"
           v-for="page in getPagination.total_pages" :key="'mypage' + page">
-          <a class="page-link" style="cursor: pointer" @click="getPageProduct(page)">{{ page }}</a>
+          <a class="page-link" style="cursor: pointer" @click="axiosGetProducts(page, getCategory)">{{ page }}</a>
         </li>
         <li class="page-item" :class="{ disabled: !getPagination.has_next }">
           <a class="page-link" aria-label="Next" style="cursor: pointer"
-            @click="getPageProduct(getPagination.current_page + 1)">
+            @click="axiosGetProducts(getPagination.current_page + 1, getCategory)">
             <span aria-hidden="true">&raquo;</span>
           </a>
         </li>
       </ul>
     </div>
+    {{ getCategory }}
     <RouterLink class="btn btn-danger mx-auto" to="/">返回首頁</RouterLink>
   </div>
 </template>
@@ -85,7 +86,6 @@ export default {
     },
     getPageProduct(page) {
       this.page = page
-      this.changeLoadingStatus()
       this.axiosGetProducts(page)
     },
     getButtonClass(iproduct) {
@@ -97,7 +97,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(cart, ['getProducts', 'getPagination', 'getFrontPage', 'getLoadingStatus', 'myCart'])
+    ...mapState(cart, ['getProducts', 'getPagination', 'getFrontPage', 'getLoadingStatus', 'getCategory','myCart'])
   },
   mounted() {
     this.getPageProduct(this.getFrontPage)

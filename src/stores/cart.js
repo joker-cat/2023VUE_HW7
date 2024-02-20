@@ -33,6 +33,9 @@ export default defineStore('cart', {
     getLoadingStatus: ({ loadingStatus }) => {
       return loadingStatus
     },
+    getCategory: ({ category }) => {
+      return category
+    },
     filterCategory: ({ products, category }) => {
       const filterArray = products.filter((i) => i.category === category)
       return filterArray
@@ -40,6 +43,7 @@ export default defineStore('cart', {
   },
   actions: {
     axiosGetProducts(page = 1, category = '') {
+      this.changeLoadingStatus()
       axios
         .get(`${this.baseUrl}/products/?page=${page}&category=${category}`)
         .then((res) => {
@@ -51,6 +55,7 @@ export default defineStore('cart', {
               addAttribute[getidx]['ispressed'] = true
             }
           })
+          this.category = category
           this.products = addAttribute
           this.pagination = res.data.pagination
           this.frontPage = page
