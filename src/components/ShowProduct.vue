@@ -23,7 +23,7 @@ export default {
     <div class="card-body">
       <h5 class="card-title fs-2 fw-bolder">{{ productInfo.title }}</h5>
       <p class="d-inline-block mb-2 text-danger fw-bolder">{{ productInfo.category }}</p>
-      <p class="card-text fs-4">{{ productInfo.description }}</p>
+      <p class="card-text fs-5">{{ productInfo.content }}</p>
       <div>
         <p>原價{{ productInfo.origin_price }}</p>
         <p>特價{{ productInfo.price }}</p>

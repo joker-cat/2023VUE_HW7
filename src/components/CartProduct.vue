@@ -17,7 +17,7 @@
       </thead>
       <tbody>
         <template v-if="getMyCartLength">
-          <tr v-for="iproduct in getMyCart">
+          <tr v-for="iproduct in getMyCart" :key="iproduct.id">
             <td>
               <button type="button" class="btn btn-outline-danger btn-sm" @click="userRemoveCartProduct(iproduct.id)">
                 <i class="fas fa-spinner fa-pulse"></i>

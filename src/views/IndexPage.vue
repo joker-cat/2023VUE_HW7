@@ -1,14 +1,14 @@
 <script>
 import { docCookies } from '../cookie.js'
 import NavbarLink from '../components/NavbarLink.vue'
-import Listgroup from '../components/Listgroup.vue'
+import ListGroups from '../components/ListGroups.vue'
 
 export default {
   components: {
     NavbarLink,
-    Listgroup
+    ListGroups
   },
-  mounted() {
+  mounted () {
     if (docCookies.hasItem('token')) {
       this.$axios.defaults.headers.common['Authorization'] = docCookies.getItem('token')
     }
@@ -21,7 +21,7 @@ export default {
     <NavbarLink />
     <div class="row">
       <div class="col-3">
-        <Listgroup />
+        <ListGroups />
       </div>
       <div class="col-9 mx-auto">
         <RouterView />
@@ -29,5 +29,4 @@ export default {
     </div>
   </div>
 </template>
-<style scoped>
-</style>
+<style scoped></style>

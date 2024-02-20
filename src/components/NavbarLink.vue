@@ -44,7 +44,7 @@ export default {
     checkLogin() {
       this.$axios
         .post('https://ec-course-api.hexschool.io/v2/api/user/check')
-        .then((res) => {
+        .then(() => {
           alert('已登入')
         })
         .catch((error) => {

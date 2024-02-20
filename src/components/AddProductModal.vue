@@ -1,6 +1,5 @@
 <template>
-    <div ref="addModal" class="modal fade" tabindex="-1" aria-labelledby="productModalLabel"
-        aria-hidden="true">
+    <div ref="addModal" class="modal fade" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-md">
             <div class="modal-content border-0">
                 <div class="modal-header bg-dark text-white">
@@ -50,23 +49,22 @@
                             <div>
                                 <div class="input-group mb-3">
                                     <input type="text" class="form-control" placeholder="新增主圖網址(限1個)"
-                                        aria-label="新增主圖網址(限1個)" aria-describedby="button-addon1"
-                                        v-model="main">
+                                        aria-label="新增主圖網址(限1個)" aria-describedby="button-addon1" v-model="main">
                                     <button class="btn btn-outline-secondary" type="button" id="button-addon1"
                                         @click="mainImage">+</button>
                                 </div>
                                 <div class="input-group mb-3">
                                     <input type="text" class="form-control" placeholder="新增附圖網址(限5個)"
-                                        aria-label="新增附圖網址(限5個)" aria-describedby="button-addon2"
-                                        v-model="additional">
+                                        aria-label="新增附圖網址(限5個)" aria-describedby="button-addon2" v-model="additional">
                                     <button class="btn btn-outline-secondary" type="button" id="button-addon2"
                                         @click="additionalImage">+</button>
                                 </div>
                             </div>
                             <div class="mb-2">
                                 <label for="imageUrl" class="form-label">圖片展示(請新增圖片網址)</label>
-                                <img v-if="addProduct.data.imageUrl!==''" class="img-fluid" :src="addProduct.data.imageUrl" alt="圖片ERR">
-                                <template v-for="(img, idx) in addProduct.data.imagesUrl" :key="img">
+                                <img v-if="addProduct.data.imageUrl !== ''" class="img-fluid" :src="addProduct.data.imageUrl"
+                                    alt="圖片ERR">
+                                <template v-for="(img) in addProduct.data.imagesUrl" :key="img">
                                     <img :src="img" alt="圖片error" class="images m-2" style="width: 200px;">
                                 </template>
                             </div>
@@ -147,10 +145,10 @@ export default {
                     console.log(error);
                 })
         },
-        openModal(){
+        openModal() {
             this.addModal.show();
         },
-        closeModal(){
+        closeModal() {
             this.addModal.hide();
         },
         reset() {
@@ -169,7 +167,7 @@ export default {
         },
     },
     computed: {
-        mydata(){
+        mydata() {
             return this.addProduct.data;
         },
         isDisabled() {
@@ -192,4 +190,5 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+</style>

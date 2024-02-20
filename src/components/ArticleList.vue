@@ -2,7 +2,7 @@
 	<div class="card mb-3">
 		<div class="row g-0">
 			<div class="col-md-3">
-				<img class="w-100" src="../assets/image/productImage/1.jpg" alt="img error">
+				<img class="w-100" src="https://drive.google.com/thumbnail?id=1opbztcfBmMVBQd6sWMg1DRifiOXQnMbO" alt="img error">
 			</div>
 			<div class="col-md-9">
 				<div class="card-body">
@@ -14,7 +14,7 @@
 			</div>
 		</div>
 	</div>
-	<!-- <button class="btn btn-primary" @click="add">add</button> -->
+	<!-- <button class="btn btn-primary" @click="del">del</button> -->
 	<!-- Button trigger modal -->
 	<button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
 		Show Modal
@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { docCookies } from '../cookie.js'
+// import { docCookies } from '../cookie.js'
 import ArticleModal from "../components/ArticleModal.vue";
 export default {
 	data() {
@@ -32,6 +32,13 @@ export default {
 		}
 	},
 	methods: {
+		// del() {
+		// 	this.$axios.delete('/admin/article/-Nr14E2BiCWqJaQ5eeYk')
+		// 		.then(res => {
+		// 			console.log(res);
+		// 		})
+		// 		.catch(err => console.log(err))
+		// },
 		// add() {
 		// 	this.$axios.post('/admin/article', {
 		// 		"data": {
@@ -56,13 +63,13 @@ export default {
 			return new Date().getTime();
 		}
 	},
-	// created(page = 1) {
-	// 	this.$axios.get(`/articles?${page}`)
-	// 		.then(res => {
-	// 			console.log(res);
-	// 		})
-	// 		.catch(err => console.log(err))
-	// },
+	created(page = 1) {
+		this.$axios.get(`/articles?${page}`)
+			.then(res => {
+				console.log(res);
+			})
+			.catch(err => console.log(err))
+	},
 	components: {
 		ArticleModal
 	},

@@ -13,6 +13,8 @@ export default defineStore('cart', {
     products: [],
     pagination: [],
     myCart: [],
+    category: '',
+    loadingStatus: false,
     frontPage: 1
   }),
   getters: {
@@ -27,12 +29,19 @@ export default defineStore('cart', {
     },
     getMyCart: ({ myCart }) => {
       return myCart
+    },
+    getLoadingStatus: ({ loadingStatus }) => {
+      return loadingStatus
+    },
+    filterCategory: ({ products, category }) => {
+      const filterArray = products.filter((i) => i.category === category)
+      return filterArray
     }
   },
   actions: {
-    axiosGetProducts(page = 1) {
+    axiosGetProducts(page = 1, category = '') {
       axios
-        .get(`${this.baseUrl}/products/?page=${page}`)
+        .get(`${this.baseUrl}/products/?page=${page}&category=${category}`)
         .then((res) => {
           const addAttribute = res.data.products.map((i) => (i = { ...i, ispressed: false }))
           this.myCart.map((icart) => {
@@ -70,6 +79,15 @@ export default defineStore('cart', {
       this.myCart = []
       this.toastAnimation('成功清空購物車')
     },
+    changeLoadingStatus() {
+      this.loadingStatus = !this.loadingStatus
+    },
+    // clearProducts() {
+    //   this.products = []
+    // },
+    // changeCategory(categoryValue) {
+    //   this.category = categoryValue === '全部' ? '' : categoryValue
+    // },
     toastAnimation(str) {
       toast(str, {
         theme: 'colored',

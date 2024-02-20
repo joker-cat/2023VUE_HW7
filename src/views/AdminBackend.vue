@@ -10,7 +10,7 @@
           登出
         </button>
       </h2>
-      <table class="table table-hover mt-4">
+      <table class="table align-middle table-hover mt-4">
         <thead>
           <tr>
             <th width="180">產品名稱</th>
@@ -201,7 +201,7 @@ export default {
     signout() {
       this.$axios
         .post('https://ec-course-api.hexschool.io/v2/logout')
-        .then((res) => {
+        .then(() => {
           alert('已登出')
           docCookies.removeItem('token')
           this.$router.push('/')

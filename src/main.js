@@ -1,5 +1,6 @@
+//bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css'
-import 'bootstrap'
+import 'bootstrap/dist/js/bootstrap.min.js'
 
 //toast CSS
 import 'vue3-toastify/dist/index.css'
