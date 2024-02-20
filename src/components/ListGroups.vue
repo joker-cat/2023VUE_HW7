@@ -7,7 +7,7 @@
             class="m-0">商品頁</p>
         </RouterLink>
         <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingTwo"
-          data-bs-parent="#accordionExample">
+          data-bs-parent="#accordionExample" @click="turnPath">
           <div class="accordion-body">
             <div class="list-group">
               <label class="list-group-item">
@@ -33,6 +33,7 @@
             </div>
           </div>
         </div>
+
       </li>
       <li class="list-group-item">
         <RouterLink class="btn btn-secondary w-100" to="/cart">購物車
@@ -62,6 +63,9 @@ export default {
   },
   methods: {
     ...mapActions(cart, ['axiosGetProducts', 'changeLoadingStatus']),
+    turnPath() {
+      this.$router.push('/products')
+    }
   },
   watch: {
     category(newValue) {

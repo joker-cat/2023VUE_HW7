@@ -8,6 +8,7 @@ const router = createRouter({
     {
       path: '/',
       component: IndexPage,
+      redirect: '/products',
       children: [
         {
           path: 'products',
@@ -34,21 +35,26 @@ const router = createRouter({
     {
       path: '/admin',
       component: AdminBackend,
+      redirect: '/admin/products',
       children: [
-        // {
-        //   path: '',
-        //   component: Products,
-        // },
-        // {
-        //   path: 'products/:id',
-        //   component: ShowProduct,
-        // }
+        {
+          path: 'products',
+          component: () => import('../components/backendPage/AdminProducts.vue')
+        },
+        {
+          path: 'orders',
+          component: () => import('../components/backendPage/AdminOrders.vue')
+        },
+        {
+          path: 'coupons',
+          component: () => import('../components/backendPage/AdminCoupons.vue')
+        },
+        {
+          path: 'articles',
+          component: () => import('../components/backendPage/AdminArticles.vue')
+        }
       ]
     }
-    // {
-    //   path: '/about',
-    //   component: () => import('../views/AboutView.vue')
-    // }
   ]
 })
 

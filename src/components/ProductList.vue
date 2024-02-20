@@ -1,6 +1,6 @@
 <template>
   <div class="text-center position-relative">
-    <loading class="w-100" v-model:active="getLoadingStatus" :is-full-page="fullPage" />
+    <loading class="w-100" v-model:active="getLoadingStatus" backgroundColor="#ff0000" loader="dots" :is-full-page="fullPage" />
     <div class="mb-3" style="height: 650px; overflow: auto;">
       <table class="table align-middle py-4">
         <thead>
@@ -56,8 +56,7 @@
         </li>
       </ul>
     </div>
-    {{ getCategory }}
-    <RouterLink class="btn btn-danger mx-auto" to="/">返回首頁</RouterLink>
+    <!-- <RouterLink class="btn btn-danger mx-auto" to="/">返回首頁</RouterLink> -->
   </div>
 </template>
 
@@ -104,7 +103,9 @@ export default {
   },
   watch: {
     getProducts() {
-      this.changeLoadingStatus()
+      setTimeout(() => {
+        this.changeLoadingStatus()
+      }, 1000);
     }
   }
 }

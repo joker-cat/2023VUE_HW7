@@ -1,16 +1,21 @@
 <template>
   <div class="row py-3">
-    <div class="col-lg-7 col-sm-12">
-      <h2>
-        產品列表
-        <router-link class="btn fw-bolder text-light fs-6 p-1 me-2 bg-danger" to="/"
-          >回前台</router-link
-        >
-        <button class="btn fw-bolder text-danger fs-6 p-1 border border-danger" @click="signout">
-          登出
-        </button>
-      </h2>
-      <table class="table align-middle table-hover mt-4">
+    <h2>
+      產品列表
+      <router-link class="btn fw-bolder text-light fs-6 p-1 me-2 bg-danger" to="/">回前台</router-link>
+      <button class="btn fw-bolder text-danger fs-6 p-1 border border-danger" @click="signout">
+        登出
+      </button>
+    </h2>
+    <div class="col-lg-3 mt-4">
+      <div class="list-group">
+        <router-link v-for="ipath in listGroups" :key="ipath.name"
+          class="btn fw-bolder list-group-item list-group-item-action" :to="ipath.path">{{ ipath.name }}</router-link>
+      </div>
+    </div>
+    <div class="col-lg-9">
+      <router-view></router-view>
+      <!-- <table class="table align-middle table-hover mt-4">
         <thead>
           <tr>
             <th width="180">產品名稱</th>
@@ -38,18 +43,10 @@
               <button type="button" class="btn btn-primary" @click="detail(item)">查看細節</button>
             </td>
             <td width="140">
-              <button
-                type="button"
-                class="btn btn-outline-primary btn-sm me-3"
-                @click="openEditModal(item)"
-              >
+              <button type="button" class="btn btn-outline-primary btn-sm me-3" @click="openEditModal(item)">
                 編輯
               </button>
-              <button
-                type="button"
-                class="btn btn-outline-danger btn-sm"
-                @click="openDelModal(item)"
-              >
+              <button type="button" class="btn btn-outline-danger btn-sm" @click="openDelModal(item)">
                 刪除
               </button>
             </td>
@@ -61,42 +58,35 @@
         <div aria-label="Page navigation example d-flex">
           <ul class="pagination p-0 m-auto">
             <li class="page-item" :class="{ disabled: !pagination.has_pre }">
-              <a
-                class="page-link"
-                aria-label="Previous"
-                style="cursor: pointer"
-                @click="renderProduct(pagination.current_page - 1)"
-              >
+              <a class="page-link" aria-label="Previous" style="cursor: pointer"
+                @click="renderProduct(pagination.current_page - 1)">
                 <span aria-hidden="true">&laquo;</span>
               </a>
             </li>
-            <li
-              class="page-item"
-              :class="{ active: page === pagination.current_page }"
-              v-for="page in pagination.total_pages"
-              :key="'mypage' + page"
-            >
+            <li class="page-item" :class="{ active: page === pagination.current_page }"
+              v-for="page in pagination.total_pages" :key="'mypage' + page">
               <a class="page-link" style="cursor: pointer" @click="renderProduct(page)">{{
                 page
               }}</a>
             </li>
             <li class="page-item" :class="{ disabled: !pagination.has_next }">
-              <a
-                class="page-link"
-                aria-label="Next"
-                style="cursor: pointer"
-                @click="renderProduct(pagination.current_page + 1)"
-              >
+              <a class="page-link" aria-label="Next" style="cursor: pointer"
+                @click="renderProduct(pagination.current_page + 1)">
                 <span aria-hidden="true">&raquo;</span>
               </a>
             </li>
           </ul>
         </div>
         <button class="btn btn-success" @click="openAddModal">建立新的產品</button>
-      </div>
+      </div> -->
     </div>
-    <DeleteProductModal ref="callDelModal" :chooseProduct="delChoose" @reloadRender="delProduct" />
+
+
     <ProductInfonation :userChoose="userChoose" />
+
+
+
+    <DeleteProductModal ref="callDelModal" :chooseProduct="delChoose" @reloadRender="delProduct" />
     <AddProduct ref="callAddModal" @reloadRender="colseAddModal" />
     <EditProduct ref="callEditModal" :choose="putChoose" @reloadRender="colseEditModal" />
   </div>
@@ -136,7 +126,13 @@ export default {
           imageUrl: '',
           imagesUrl: []
         }
-      }
+      },
+      listGroups: [
+        { name: "產品", path: "/admin/products" },
+        { name: "訂單", path: "/admin/orders" },
+        { name: "優惠券", path: "/admin/coupons" },
+        { name: "文章", path: "/admin/articles" }
+      ]
     }
   },
   created() {
@@ -230,4 +226,5 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+</style>
