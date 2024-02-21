@@ -177,8 +177,7 @@ export default {
           docCookies.removeItem('token')
           this.$router.push('/')
         })
-        .catch((error) => {
-          console.log(error)
+        .catch(() => {
           alert('登出失敗')
         })
     }

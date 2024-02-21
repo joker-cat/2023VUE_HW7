@@ -1,22 +1,20 @@
 <template>
   <div class="row py-3">
-    <h2>
-      產品列表
-      <router-link class="btn fw-bolder text-light fs-6 p-1 me-2 bg-danger" to="/">回前台</router-link>
-      <button class="btn fw-bolder text-danger fs-6 p-1 border border-danger" @click="signout">
-        登出
-      </button>
-    </h2>
+    <h2>產品列表</h2>
     <div class="col-lg-3 mt-4">
       <div class="list-group">
         <router-link v-for="ipath in listGroups" :key="ipath.name"
           class="btn fw-bolder list-group-item list-group-item-action" :to="ipath.path">{{ ipath.name }}</router-link>
+          <router-link class="btn fw-bolder text-light fs-6 p-2 bg-danger my-3" to="/">回前台</router-link>
+          <button class="btn fw-bolder text-danger fs-6 p-2 border border-danger" @click="signout">
+            登出
+          </button>
       </div>
     </div>
     <div class="col-lg-9">
       <router-view></router-view>
     </div>
-    </div>
+  </div>
 </template>
 
 <script>

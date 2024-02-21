@@ -62,17 +62,31 @@ export default defineStore('cart', {
         })
         .catch((err) => console.log(err))
     },
+    //要改成購物車放在API，目前已成功加入購物車
     addToCart(productId, count = 1) {
-      const hasInCart = this.myCart.filter((iproduct) => iproduct.id === productId).length
-      if (hasInCart) {
-        const findIdx = this.myCart.findIndex((iMycart) => iMycart.id === productId)
-        this.myCart[findIdx]['count'] = count + 1
-        this.toastAnimation('數量成功修改')
-      } else {
-        const findIdx = this.products.findIndex((iproduct) => iproduct.id === productId)
-        this.myCart.push({ ...this.products[findIdx], count })
-        this.toastAnimation('成功加入購物車')
-      }
+      axios
+        .post(`${this.baseUrl}/cart`, {
+          data: {
+            product_id: productId,
+            qty: count
+          }
+        })
+        .then((res) => {
+          console.log(res)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+      // const hasInCart = this.myCart.filter((iproduct) => iproduct.id === productId).length
+      // if (hasInCart) {
+      //   const findIdx = this.myCart.findIndex((iMycart) => iMycart.id === productId)
+      //   this.myCart[findIdx]['count'] = count + 1
+      //   this.toastAnimation('數量成功修改')
+      // } else {
+      //   const findIdx = this.products.findIndex((iproduct) => iproduct.id === productId)
+      //   this.myCart.push({ ...this.products[findIdx], count })
+      //   this.toastAnimation('成功加入購物車')
+      // }
     },
     removeToProduct(productId) {
       const findMyCartIdx = this.myCart.findIndex((icart) => icart.id === productId)

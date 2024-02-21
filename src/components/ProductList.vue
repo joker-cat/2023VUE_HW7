@@ -56,7 +56,6 @@
         </li>
       </ul>
     </div>
-    <!-- <RouterLink class="btn btn-danger mx-auto" to="/">返回首頁</RouterLink> -->
   </div>
 </template>
 
