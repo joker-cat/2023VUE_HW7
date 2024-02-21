@@ -1,6 +1,5 @@
 <template>
-    <div ref="delModal" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+    <div ref="delModal" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -43,14 +42,19 @@
 import * as bootstrap from "bootstrap/dist/js/bootstrap.min.js";
 export default {
     props: ["chooseProduct"],
+    data() {
+        return {
+            delModal: null,
+        }
+    },
     methods: {
         allowDelete() {
             this.$emit('reloadRender', this.chooseProduct.id);
         },
-        openModal(){
+        openModal() {
             this.delModal.show();
         },
-        closeModal(){
+        closeModal() {
             this.delModal.hide();
         }
     },

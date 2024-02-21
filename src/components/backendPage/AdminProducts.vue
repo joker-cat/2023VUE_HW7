@@ -25,7 +25,10 @@
           <span v-else>未啟用</span>
         </td>
         <td width="130">
-          <button type="button" class="btn btn-primary" @click="detail(item)">查看細節</button>
+          <!-- <button type="button" class="btn btn-primary" @click="detail(item)">查看細節</button> -->
+          <button type="button" class="btn btn-primary" @click="openInfoModal(item)" >
+            查看細節
+          </button>
         </td>
         <td width="140">
           <button type="button" class="btn btn-outline-primary btn-sm me-3" @click="openEditModal(item)">
@@ -64,19 +67,70 @@
     </div>
     <button class="btn btn-success" @click="openAddModal">建立新的產品</button>
   </div>
+  <ProductInfonation ref="callInfoModal" :userChoose="userChoose" />
+  <DeleteProductModal ref="callDelModal" :chooseProduct="delChoose" @reloadRender="delProduct" />
+  <AddProduct ref="callAddModal" @reloadRender="colseAddModal" />
+  <EditProduct ref="callEditModal" :choose="putChoose" @reloadRender="colseEditModal" />
 </template>
 
 <script>
 import { docCookies } from '../../cookie.js'
+import AddProduct from './AddProductModal.vue'
+import EditProduct from './EditProductModal.vue'
+import ProductInfonation from './ProductInfonation.vue'
+import DeleteProductModal from './DeleteProductModal.vue'
 export default {
   data() {
     return {
+      pathname: '', //當前路徑
+      hasCookie: false, //是否有cookie
+      userChoose: {}, //品項選擇
+      putChoose: {}, //品項編輯
+      delChoose: {}, //即將刪除
       allProducts: [], //全部品項,
       pagination: {}, //總頁數
-
+      pages: 1, //當前頁數
+      addProduct: { //新增
+        data: {
+          title: '',
+          category: '',
+          origin_price: '',
+          price: '',
+          unit: '個',
+          description: '',
+          content: '',
+          is_enabled: 0,
+          imageUrl: '',
+          imagesUrl: []
+        }
+      }
+    }
+  },
+  created() {
+    if (!docCookies.hasItem('token')) {
+      this.$router.push('/')
+      return
     }
   },
   methods: {
+    delProduct(id) {
+      this.$axios
+        .delete(`/admin/product/${id}`)
+        .then((res) => {
+          if (res.data.success) {
+            this.hasCookie = res.data.success
+            this.colseDelModal()
+            this.renderProduct()
+            alert('已刪除')
+          }
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    },
+    // detail(item) {
+    //   this.userChoose = { ...item }
+    // },
     renderProduct(page = 1) {
       this.$axios
         .get(`/admin/products?page=${page}`)
@@ -88,15 +142,59 @@ export default {
           console.log(error)
         })
     },
+    openAddModal() {
+      this.$refs.callAddModal.openModal()
+    },
+    openEditModal(item) {
+      this.putChoose = { ...item }
+      this.$refs.callEditModal.openModal()
+    },
+    openDelModal(item) {
+      this.delChoose = { ...item }
+      this.$refs.callDelModal.openModal()
+    },
+    openInfoModal(item) {
+      this.userChoose = { ...item }
+      this.$refs.callInfoModal.openModal()
+    },
+    colseAddModal() {
+      this.$refs.callAddModal.closeModal()
+      this.renderProduct()
+    },
+    colseEditModal() {
+      this.$refs.callEditModal.closeModal()
+      this.renderProduct()
+    },
+    colseDelModal() {
+      this.$refs.callDelModal.closeModal()
+      this.renderProduct()
+    },
+    signout() {
+      this.$axios
+        .post('https://ec-course-api.hexschool.io/v2/logout')
+        .then(() => {
+          alert('已登出')
+          docCookies.removeItem('token')
+          this.$router.push('/')
+        })
+        .catch((error) => {
+          console.log(error)
+          alert('登出失敗')
+        })
+    }
   },
-    mounted() {
+  mounted() {
     const hasToken = docCookies.hasItem('token')
-    if (!hasToken) {
-      this.$router.push('/')
-    } else {
+    if (hasToken) {
       this.$axios.defaults.headers.common['Authorization'] = docCookies.getItem('token')
       this.renderProduct()
     }
+  },
+  components: {
+    AddProduct,
+    EditProduct,
+    ProductInfonation,
+    DeleteProductModal
   }
 }
 </script>

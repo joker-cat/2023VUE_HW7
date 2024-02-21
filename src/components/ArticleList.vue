@@ -23,7 +23,6 @@
 </template>
 
 <script>
-// import { docCookies } from '../cookie.js'
 import ArticleModal from "../components/ArticleModal.vue";
 export default {
 	data() {

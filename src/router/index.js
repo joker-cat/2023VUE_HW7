@@ -54,6 +54,14 @@ const router = createRouter({
           component: () => import('../components/backendPage/AdminArticles.vue')
         }
       ]
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      redirect: '/'
+    },
+    {
+      path: '/admin/:pathMatch(.*)*',
+      redirect: '/'
     }
   ]
 })

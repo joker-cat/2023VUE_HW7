@@ -117,6 +117,7 @@ export default {
   data () {
     return {
       inputNull: [],
+      editModal: null,
       warmObj: {
         title: '商品名稱',
         price: '售價',
