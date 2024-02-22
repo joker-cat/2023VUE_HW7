@@ -27,7 +27,7 @@
             <td class="text-center p-0">
               <div>
                 <RouterLink class="btn btn-success me-2" :to="`/products/${iproduct.id}`">查看</RouterLink>
-                <button class="btn btn-primary" :class="getButtonClass(iproduct)" @click="clickaddToCart(iproduct)">
+                <button class="btn btn-primary" :class="getButtonClass(iproduct.ispressed)" @click="clickaddToCart(iproduct)">
                   {{ iproduct.ispressed ? '已加入購物車' : '加入購物車' }}
                 </button>
               </div>
@@ -76,29 +76,34 @@ export default {
     Loading
   },
   methods: {
-    ...mapActions(cart, ['addToCart', 'axiosGetProducts', 'changeLoadingStatus']),
+    ...mapActions(cart, ['addToCart', 'axiosGetProducts', 'changeLoadingStatus','getCart']),
     clickaddToCart(product) {
-      const InCart = this.myCart.findIndex((icart) => icart.id === product.id)
-      this.addToCart(product.id, InCart !== -1 ? this.myCart[InCart].count : 1)
-      product.ispressed = true
+      console.log(product);
+      // const InCart = this.myCart.findIndex((icart) => icart.id === product.id)
+      // this.addToCart(product.id, InCart !== -1 ? this.myCart[InCart].count : 1)
+      this.addToCart(product.id)
     },
     getPageProduct(page) {
       this.page = page
       this.axiosGetProducts(page)
     },
-    getButtonClass(iproduct) {
+    getButtonClass(boolen) {
       return {
         btn: true,
-        'btn-primary': !iproduct.ispressed,
-        'btn-danger': iproduct.ispressed
+        'btn-primary': boolen,
+        'btn-danger': boolen
       }
     }
   },
   computed: {
-    ...mapState(cart, ['getProducts', 'getPagination', 'getFrontPage', 'getLoadingStatus', 'getCategory','myCart'])
+    ...mapState(cart, ['getProducts', 'getPagination', 'getFrontPage', 'getLoadingStatus', 'getCategory', 'getMyCart']),
+    filterGetMyCart() {
+      return this.getMyCart.carts
+    }
   },
   mounted() {
     this.getPageProduct(this.getFrontPage)
+    this.getCart();
   },
   watch: {
     getProducts() {

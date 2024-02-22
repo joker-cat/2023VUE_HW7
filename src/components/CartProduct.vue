@@ -16,63 +16,57 @@
         </tr>
       </thead>
       <tbody>
-        <!-- -------測試顯示-------- -->
-        {{ getMyCart }}getMyCart
-        <!-- -------測試顯示-------- -->
-        <template v-if="getMyCartLength">
-          <tr v-for="iproduct in getMyCart" :key="iproduct.id">
-            {{ iproduct }}
-            <td>
-              <button type="button" class="btn btn-outline-danger btn-sm" @click="userRemoveCartProduct(iproduct.id)">
-                <i class="fas fa-spinner fa-pulse"></i>
-                x
-              </button>
-            </td>
-            <td style="height: 100px">
-              <img class="h-100" :src="iproduct.imageUrl" alt="" />
-            </td>
-            <td>
-              {{ iproduct.title }}
-              <div class="text-success">已套用優惠券</div>
-            </td>
-            <td>
-              <div class="input-group input-group-sm">
-                <div class="input-group">
-                  <input min="1" type="number" class="form-control" :value="iproduct.count"
-                    @input="userAddToCart(iproduct.id, $event)" />
-                  <span class="input-group-text" id="basic-addon2">{{ iproduct.unit }}</span>
-                </div>
+        <tr v-for="iproduct in getMyCart.carts" :key="iproduct.id">
+          <td>
+            <button type="button" class="btn btn-outline-danger btn-sm" @click="userRemoveCartProduct(iproduct.id)">
+              <i class="fas fa-spinner fa-pulse"></i>
+              x
+            </button>
+          </td>
+          <td style="height: 100px">
+            <img class="h-100" :src="iproduct.product.imageUrl" alt="img error" />
+          </td>
+          <td>
+            {{ iproduct.product.title }}
+            <div class="text-success">已套用優惠券</div>
+          </td>
+          <td>
+            <div class="input-group input-group-sm">
+              <div class="input-group">
+                <input min="1" type="number" class="form-control" :value="iproduct.qty"
+                  @input="userAddToCart(iproduct.product_id, $event)" />
+                <span class="input-group-text" id="basic-addon2">{{ iproduct.product.unit }}</span>
               </div>
-            </td>
-            <td>
-              <div class="input-group d-flex">
-                <span class="text-decoration-line-through flex-grow-1">{{
-                  iproduct.origin_price
-                }}</span>
-                <span>
-                  <small class="text-success">折扣價：</small>
-                  <span>{{ iproduct.price }}</span>
-                </span>
-              </div>
-            </td>
-          </tr>
-        </template>
+            </div>
+          </td>
+          <td>
+            <div class="input-group d-flex">
+              <span class="text-decoration-line-through flex-grow-1">{{
+                iproduct.product.origin_price
+              }}</span>
+              <span>
+                <small class="text-success">折扣價：</small>
+                <span>{{ iproduct.product.price }}</span>
+              </span>
+            </div>
+          </td>
+        </tr>
       </tbody>
       <tfoot>
         <tr>
           <td colspan="2" class="text-end"></td>
           <td colspan="2" class="text-end">原價總計</td>
-          <td class="text-end">{{ originPriceTotal.originPrice }}</td>
+          <td class="text-end">{{ getMyCart.total }}</td>
         </tr>
         <tr>
           <td colspan="2" class="text-end"></td>
           <td colspan="2" class="text-end">折扣</td>
-          <td class="text-end text-danger">-{{ originPriceTotal.differencePrice }}</td>
+          <td class="text-end text-danger">-{{ getMyCart.total- getMyCart.final_total }}</td>
         </tr>
         <tr>
           <td colspan="2" class="text-end"></td>
           <td colspan="2" class="text-end text-success">總折扣價</td>
-          <td class="text-end">{{ originPriceTotal.price }}</td>
+          <td class="text-end">{{ getMyCart.final_total }}</td>
         </tr>
       </tfoot>
     </table>
@@ -98,10 +92,9 @@ import cart from '../stores/cart.js'
 import { mapState, mapActions } from 'pinia'
 export default {
   methods: {
-    ...mapActions(cart, ['addToCart', 'removeToProduct', 'removeAllProduct', 'getCart']),
+    ...mapActions(cart, ['addToCart', 'removeToProduct', 'removeAllProduct','getCart']),
     userAddToCart(productId, ievent) {
-      //這邊是傳過來是修改後的數量，估計為預設
-      this.addToCart(productId, ievent.target.value - 1)
+      this.addToCart(productId, ievent.target.value - 0)
     },
     userRemoveCartProduct(productId) {
       this.removeToProduct(productId)
@@ -113,18 +106,20 @@ export default {
   computed: {
     ...mapState(cart, ['getMyCart']),
     getMyCartLength() {
-      return this.getMyCart.length > 0 ? true : false
+      return Object.keys(this.getMyCart).length === 0 ?
+        false :
+        this.getMyCart.carts.length > 0 ? true : false;
     },
-    originPriceTotal() {
-      let totalObj = { originPrice: 0, price: 0, differencePrice: 0 }
-      this.getMyCart.reduce((acc, ipt) => {
-        totalObj.originPrice += ipt.origin_price * ipt.count
-        totalObj.price += ipt.price * ipt.count
-        totalObj.differencePrice += (ipt.origin_price - ipt.price) * ipt.count
-      }, totalObj)
+    // originPriceTotal() {
+    //   let totalObj = { originPrice: 0, price: 0, differencePrice: 0 }
+    //   this.getMyCart.reduce((acc, ipt) => {
+    //     totalObj.originPrice += ipt.origin_price * ipt.count
+    //     totalObj.price += ipt.price * ipt.count
+    //     totalObj.differencePrice += (ipt.origin_price - ipt.price) * ipt.count
+    //   }, totalObj)
 
-      return totalObj
-    }
+    //   return totalObj
+    // }
   },
   mounted() {
     this.getCart();
