@@ -16,8 +16,12 @@
         </tr>
       </thead>
       <tbody>
+        <!-- -------測試顯示-------- -->
+        {{ getMyCart }}getMyCart
+        <!-- -------測試顯示-------- -->
         <template v-if="getMyCartLength">
           <tr v-for="iproduct in getMyCart" :key="iproduct.id">
+            {{ iproduct }}
             <td>
               <button type="button" class="btn btn-outline-danger btn-sm" @click="userRemoveCartProduct(iproduct.id)">
                 <i class="fas fa-spinner fa-pulse"></i>
@@ -94,7 +98,7 @@ import cart from '../stores/cart.js'
 import { mapState, mapActions } from 'pinia'
 export default {
   methods: {
-    ...mapActions(cart, ['addToCart', 'removeToProduct', 'removeAllProduct']),
+    ...mapActions(cart, ['addToCart', 'removeToProduct', 'removeAllProduct', 'getCart']),
     userAddToCart(productId, ievent) {
       //這邊是傳過來是修改後的數量，估計為預設
       this.addToCart(productId, ievent.target.value - 1)
@@ -121,6 +125,9 @@ export default {
 
       return totalObj
     }
+  },
+  mounted() {
+    this.getCart();
   }
 }
 </script>

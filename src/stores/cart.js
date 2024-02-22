@@ -12,7 +12,7 @@ export default defineStore('cart', {
     baseUrl: 'https://ec-course-api.hexschool.io/v2/api/joooker',
     products: [],
     pagination: [],
-    myCart: [],
+    myCart: {},
     category: '',
     loadingStatus: false,
     frontPage: 1
@@ -47,16 +47,21 @@ export default defineStore('cart', {
       axios
         .get(`${this.baseUrl}/products/?page=${page}&category=${category}`)
         .then((res) => {
-          const addAttribute = res.data.products.map((i) => (i = { ...i, ispressed: false }))
-          this.myCart.map((icart) => {
-            const icartId = icart.id
-            const getidx = addAttribute.findIndex((i) => icartId === i.id)
-            if (getidx !== -1) {
-              addAttribute[getidx]['ispressed'] = true
-            }
-          })
+          console.log(res)
+          // const addAttribute = res.data.products.map((i) => (i = { ...i, ispressed: false }))
+          // this.myCart.map((icart) => {
+          //   const icartId = icart.id
+          //   const getidx = addAttribute.findIndex((i) => icartId === i.id)
+          //   if (getidx !== -1) {
+          //     addAttribute[getidx]['ispressed'] = true
+          //   }
+          // })
+          // this.category = category
+          // this.products = addAttribute
+          // this.pagination = res.data.pagination
+          // this.frontPage = page
           this.category = category
-          this.products = addAttribute
+          this.products = res.data.products
           this.pagination = res.data.pagination
           this.frontPage = page
         })
@@ -87,6 +92,21 @@ export default defineStore('cart', {
       //   this.myCart.push({ ...this.products[findIdx], count })
       //   this.toastAnimation('成功加入購物車')
       // }
+    },
+    getCart() {
+      axios
+        .get(`${this.baseUrl}/cart`)
+        .then((res) => {
+          console.log('-----成功獲取 cart 購物車-----');
+          console.log(res);
+          this.myCart = res.data.data
+          console.log('------------打印 this.myCart------------')
+          console.log(this.myCart)
+          console.log('----------------------------------------')
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     },
     removeToProduct(productId) {
       const findMyCartIdx = this.myCart.findIndex((icart) => icart.id === productId)
