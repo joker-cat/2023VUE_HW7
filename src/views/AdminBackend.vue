@@ -40,7 +40,7 @@ export default {
   methods: {
     signout() {
       this.$axios
-        .post('https://ec-course-api.hexschool.io/v2/logout')
+        .post('https://vue3-course-api.hexschool.io/v2/logout')
         .then(() => {
           alert('已登出')
           docCookies.removeItem('token')
@@ -56,6 +56,8 @@ export default {
     const hasToken = docCookies.hasItem('token')
     if (!hasToken) {
       this.$router.push('/')
+    } else {
+      this.$axios.defaults.headers.common['Authorization'] = docCookies.getItem('token')
     }
   }
 }
